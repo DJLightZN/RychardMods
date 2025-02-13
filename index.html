@@ -216,6 +216,54 @@
                 modInfo.classList.add("active");
             }
         }
+            <div class="container">
+        <h2>Mais Mods Disponíveis</h2>
+        <ul class="game-list">
+            <li>
+                <a href="https://www.mediafire.com/file/escghy0z9f3ocsj/Shadow_Fight_2_UNLIMITED_MOD_APK_by_Melish+(1).zip/file" target="_blank">Shadow Fight 2 - Unlimited</a>
+                <button class="download-button" onclick="toggleModInfo('shadowFightInfo')">Informações</button>
+                <div id="shadowFightInfo" class="mod-info">
+                    <p>Mod para Shadow Fight 2, versão ilimitada. Aproveite recursos gratuitos e desbloqueados! <br>Download direto no Mediafire.</p>
+                </div>
+            </li>
+            <li>
+                <a href="https://www.mediafire.com/file/0v7yhnfx3af672p/minecraft_1_21_60_official.apk/file" target="_blank">Minecraft 1.21.60 - APK Oficial</a>
+                <button class="download-button" onclick="toggleModInfo('minecraftInfo')">Informações</button>
+                <div id="minecraftInfo" class="mod-info">
+                    <p>Versão oficial do Minecraft 1.21.60 para Android. Baixe agora e aproveite as novas atualizações e recursos! <br>Download direto no Mediafire.</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <h2>Instruções para Download</h2>
+        <p>Para baixar qualquer mod, basta clicar no link do jogo desejado e seguir as instruções para instalação no seu dispositivo.</p>
+        <p><strong>Importante:</strong> Alguns mods podem exigir permissões adicionais para instalação de fontes desconhecidas no seu dispositivo. Certifique-se de permitir esta opção nas configurações de segurança do seu aparelho.</p>
+    </div>
+
+    <footer>
+        &copy; 2025 RychardMods - Todos os direitos reservados.
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("menu");
+            if (menu.classList.contains("active")) {
+                menu.classList.remove("active");
+            } else {
+                menu.classList.add("active");
+            }
+        }
+
+        function toggleModInfo(modId) {
+            var modInfo = document.getElementById(modId);
+            if (modInfo.classList.contains("active")) {
+                modInfo.classList.remove("active");
+            } else {
+                modInfo.classList.add("active");
+            }
+        }
     </script>
 </body>
 </html>

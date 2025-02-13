@@ -645,4 +645,499 @@
 
 <!-- Campo de pesquisa -->
 <input type="text" id="search-input" placeholder="Pesquisar notícias..." style="margin-top: 20px; padding: 10px; width: 300px;">
+<script>
+    let currentNewsPage = 0; // Controla a página
+    let allNews = [
+        { title: "Novo Mod para Minecraft", description: "Um novo mod de texturas foi lançado, confira!", id: 1, likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 } },
+        { title: "Atualização de Shadow Fight 2", description: "Novos personagens e modos estão disponíveis.", id: 2, likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 } },
+        { title: "Mini Jogos Chegando em Breve", description: "100 novos mini jogos serão lançados nas próximas semanas!", id: 3, likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 } },
+        { title: "Nova Atualização de PUBG", description: "Nova temporada traz novos mapas e armas!", id: 4, likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 } },
+        { title: "Ajustes no sistema de recompensas", description: "Agora você pode ganhar mais moedas nos minigames!", id: 5, likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 } },
+        { title: "Lançamento de novos mods para GTA V", description: "Mods incríveis de carros e gráficos para GTA V.", id: 6, likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 } },
+        { title: "Minecraft 2.0 anunciado", description: "Minecraft 2.0 traz recursos inovadores e mais opções de customização.", id: 7, likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 } },
+        { title: "Melhorias no desempenho de Call of Duty", description: "O jogo agora roda mais rápido e com menos bugs.", id: 8, likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 } },
+        { title: "Novos mapas para Fortnite", description: "Novos mapas com diferentes temas estarão disponíveis em breve.", id: 9, likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 } },
+        { title: "Mortal Kombat 12 traz novos personagens", description: "Confira os novos lutadores e suas habilidades.", id: 10, likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 } },
+    ];
 
+    // Função para carregar as notícias
+    function loadNews(page = 0) {
+        const newsFeed = document.getElementById("news-feed");
+        newsFeed.innerHTML = ""; // Limpar notícias carregadas
+
+        const newsPerPage = 5;
+        const start = page * newsPerPage;
+        const end = start + newsPerPage;
+        const currentNews = allNews.slice(start, end);
+
+        currentNews.forEach(item => {
+            const newsItem = document.createElement("div");
+            newsItem.className = "news-item";
+            newsItem.id = `news-${item.id}`;
+            newsItem.innerHTML = `
+                <h3 onclick="openNewsDetail(${item.id})">${item.title}</h3>
+                <p>${item.description}</p>
+                <div class="news-actions">
+                    <button onclick="likeNews(${item.id})">Curtir (${item.likes})</button>
+                    <button onclick="showComments(${item.id})">Comentários (${item.comments.length})</button>
+                    <button onclick="shareNews(${item.id})">Compartilhar</button>
+                    <div>
+                        <button onclick="reactToNews(${item.id}, 'like')">👍 (${item.reactions.like})</button>
+                        <button onclick="reactToNews(${item.id}, 'love')">❤️ (${item.reactions.love})</button>
+                        <button onclick="reactToNews(${item.id}, 'sad')">😢 (${item.reactions.sad})</button>
+                        <button onclick="reactToNews(${item.id}, 'laugh')">😂 (${item.reactions.laugh})</button>
+                    </div>
+                </div>
+                <div id="comments-${item.id}" class="comments" style="display:none;">
+                    <input type="text" id="comment-input-${item.id}" placeholder="Escreva um comentário...">
+                    <button onclick="addComment(${item.id})">Comentar</button>
+                    <ul id="comment-list-${item.id}">
+                        ${item.comments.map(comment => `<li>${comment}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            newsFeed.appendChild(newsItem);
+        });
+
+        // Esconder o botão "Carregar Mais" se não houver mais notícias
+        if (end >= allNews.length) {
+            document.getElementById("load-more-btn").style.display = "none";
+        }
+    }
+
+    // Função para curtir uma notícia
+    function likeNews(newsId) {
+        const news = allNews.find(news => news.id === newsId);
+        news.likes++;
+        document.querySelector(`#news-${newsId} button`).innerText = `Curtir (${news.likes})`;
+    }
+
+    // Função para reagir à notícia
+    function reactToNews(newsId, reactionType) {
+        const news = allNews.find(news => news.id === newsId);
+        if (news.reactions[reactionType] !== undefined) {
+            news.reactions[reactionType]++;
+            document.querySelector(`#news-${newsId} button:nth-child(${Object.keys(news.reactions).indexOf(reactionType) + 1})`).innerText = `${reactionType} (${news.reactions[reactionType]})`;
+        }
+    }
+
+    // Função para exibir ou ocultar comentários
+    function showComments(newsId) {
+        const commentsSection = document.getElementById(`comments-${newsId}`);
+        commentsSection.style.display = commentsSection.style.display === "none" ? "block" : "none";
+    }
+
+    // Função para adicionar um comentário
+    function addComment(newsId) {
+        const commentInput = document.getElementById(`comment-input-${newsId}`);
+        const commentList = document.getElementById(`comment-list-${newsId}`);
+        const comment = commentInput.value.trim();
+
+        if (comment) {
+            const news = allNews.find(news => news.id === newsId);
+            news.comments.push(comment);
+            commentList.innerHTML += `<li>${comment}</li>`;
+            commentInput.value = ''; // Limpar o campo de comentário
+        }
+    }
+
+    // Função para compartilhar a notícia
+    function shareNews(newsId) {
+        const news = allNews.find(news => news.id === newsId);
+        const shareLink = `https://www.example.com/news/${news.id}`;
+        alert(`Compartilhe este link: ${shareLink}`);
+    }
+
+    // Função para carregar mais notícias
+    function loadMoreNews() {
+        currentNewsPage++;
+        loadNews(currentNewsPage);
+    }
+
+    // Função para abrir os detalhes da notícia
+    function openNewsDetail(newsId) {
+        const news = allNews.find(news => news.id === newsId);
+        alert(`Detalhes da notícia: ${news.title}\n\n${news.description}`);
+        // Você pode redirecionar para uma página de detalhes de notícia com mais conteúdo.
+    }
+
+    // Função para realizar a busca ao digitar
+    function filterNews() {
+        const searchInput = document.getElementById("search-input").value.toLowerCase();
+        const filteredNews = allNews.filter(news => 
+            news.title.toLowerCase().includes(searchInput) || news.description.toLowerCase().includes(searchInput)
+        );
+        currentNewsPage = 0; // Resetar a página
+        allNews = filteredNews; // Atualizar as notícias filtradas
+        loadNews(currentNewsPage);
+    }
+
+    // Função para realizar a busca ao digitar
+    document.getElementById("search-input").addEventListener("input", filterNews);
+
+    // Carregar as notícias quando a página for carregada
+    window.onload = function() {
+        loadNews(currentNewsPage); // Carregar as primeiras notícias
+    };
+</script>
+
+<!-- Exibição de notícias -->
+<div id="news-feed"></div>
+
+<!-- Botão de carregar mais -->
+<button id="load-more-btn" class="load-more" onclick="loadMoreNews()">Carregar Mais Notícias</button>
+
+<!-- Campo de pesquisa -->
+<input type="text" id="search-input" placeholder="Pesquisar notícias..." style="margin-top: 20px; padding: 10px; width: 300px;">
+<script>
+    let currentNewsPage = 0; // Controla a página
+    let allNews = [
+        { title: "Novo Mod para Minecraft", description: "Um novo mod de texturas foi lançado, confira!", id: 1, category: "Jogos", likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 }, subscribers: [] },
+        { title: "Atualização de Shadow Fight 2", description: "Novos personagens e modos estão disponíveis.", id: 2, category: "Jogos", likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 }, subscribers: [] },
+        { title: "Mini Jogos Chegando em Breve", description: "100 novos mini jogos serão lançados nas próximas semanas!", id: 3, category: "Jogos", likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 }, subscribers: [] },
+        { title: "Nova Atualização de PUBG", description: "Nova temporada traz novos mapas e armas!", id: 4, category: "Jogos", likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 }, subscribers: [] },
+        { title: "Ajustes no sistema de recompensas", description: "Agora você pode ganhar mais moedas nos minigames!", id: 5, category: "Recompensas", likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 }, subscribers: [] },
+        { title: "Lançamento de novos mods para GTA V", description: "Mods incríveis de carros e gráficos para GTA V.", id: 6, category: "Jogos", likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 }, subscribers: [] },
+        { title: "Minecraft 2.0 anunciado", description: "Minecraft 2.0 traz recursos inovadores e mais opções de customização.", id: 7, category: "Jogos", likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 }, subscribers: [] },
+        { title: "Melhorias no desempenho de Call of Duty", description: "O jogo agora roda mais rápido e com menos bugs.", id: 8, category: "Jogos", likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 }, subscribers: [] },
+        { title: "Novos mapas para Fortnite", description: "Novos mapas com diferentes temas estarão disponíveis em breve.", id: 9, category: "Jogos", likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 }, subscribers: [] },
+        { title: "Mortal Kombat 12 traz novos personagens", description: "Confira os novos lutadores e suas habilidades.", id: 10, category: "Jogos", likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 }, subscribers: [] },
+    ];
+
+    let currentCategory = "Todos";
+    let theme = "light"; // Default theme
+
+    // Função para carregar as notícias
+    function loadNews(page = 0) {
+        const newsFeed = document.getElementById("news-feed");
+        newsFeed.innerHTML = ""; // Limpar notícias carregadas
+
+        const newsPerPage = 5;
+        const start = page * newsPerPage;
+        const end = start + newsPerPage;
+        const filteredNews = allNews.filter(news => currentCategory === "Todos" || news.category === currentCategory).slice(start, end);
+
+        filteredNews.forEach(item => {
+            const newsItem = document.createElement("div");
+            newsItem.className = "news-item";
+            newsItem.id = `news-${item.id}`;
+            newsItem.innerHTML = `
+                <h3 onclick="openNewsDetail(${item.id})">${item.title}</h3>
+                <p>${item.description}</p>
+                <p><strong>Categoria:</strong> ${item.category}</p>
+                <div class="news-actions">
+                    <button onclick="likeNews(${item.id})">Curtir (${item.likes})</button>
+                    <button onclick="showComments(${item.id})">Comentários (${item.comments.length})</button>
+                    <button onclick="subscribeNews(${item.id})">Inscrever-se</button>
+                    <div>
+                        <button onclick="reactToNews(${item.id}, 'like')">👍 (${item.reactions.like})</button>
+                        <button onclick="reactToNews(${item.id}, 'love')">❤️ (${item.reactions.love})</button>
+                        <button onclick="reactToNews(${item.id}, 'sad')">😢 (${item.reactions.sad})</button>
+                        <button onclick="reactToNews(${item.id}, 'laugh')">😂 (${item.reactions.laugh})</button>
+                    </div>
+                </div>
+                <div id="comments-${item.id}" class="comments" style="display:none;">
+                    <input type="text" id="comment-input-${item.id}" placeholder="Escreva um comentário...">
+                    <button onclick="addComment(${item.id})">Comentar</button>
+                    <ul id="comment-list-${item.id}">
+                        ${item.comments.map(comment => `<li>${comment}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            newsFeed.appendChild(newsItem);
+        });
+
+        // Esconder o botão "Carregar Mais" se não houver mais notícias
+        if (end >= allNews.length) {
+            document.getElementById("load-more-btn").style.display = "none";
+        }
+    }
+
+    // Função para curtir uma notícia
+    function likeNews(newsId) {
+        const news = allNews.find(news => news.id === newsId);
+        news.likes++;
+        document.querySelector(`#news-${newsId} button`).innerText = `Curtir (${news.likes})`;
+    }
+
+    // Função para reagir à notícia
+    function reactToNews(newsId, reactionType) {
+        const news = allNews.find(news => news.id === newsId);
+        if (news.reactions[reactionType] !== undefined) {
+            news.reactions[reactionType]++;
+            document.querySelector(`#news-${newsId} button:nth-child(${Object.keys(news.reactions).indexOf(reactionType) + 1})`).innerText = `${reactionType} (${news.reactions[reactionType]})`;
+        }
+    }
+
+    // Função para exibir ou ocultar comentários
+    function showComments(newsId) {
+        const commentsSection = document.getElementById(`comments-${newsId}`);
+        commentsSection.style.display = commentsSection.style.display === "none" ? "block" : "none";
+    }
+
+    // Função para adicionar um comentário
+    function addComment(newsId) {
+        const commentInput = document.getElementById(`comment-input-${newsId}`);
+        const commentList = document.getElementById(`comment-list-${newsId}`);
+        const comment = commentInput.value.trim();
+
+        if (comment) {
+            const news = allNews.find(news => news.id === newsId);
+            news.comments.push(comment);
+            commentList.innerHTML += `<li>${comment}</li>`;
+            commentInput.value = ''; // Limpar o campo de comentário
+        }
+    }
+
+    // Função para inscrever-se em uma notícia
+    function subscribeNews(newsId) {
+        const news = allNews.find(news => news.id === newsId);
+        const user = prompt("Digite seu nome para se inscrever:");
+        if (user) {
+            news.subscribers.push(user);
+            alert(`Você se inscreveu para receber notificações sobre a notícia: ${news.title}`);
+        }
+    }
+
+    // Função para carregar mais notícias
+    function loadMoreNews() {
+        currentNewsPage++;
+        loadNews(currentNewsPage);
+    }
+
+    // Função para abrir os detalhes da notícia
+    function openNewsDetail(newsId) {
+        const news = allNews.find(news => news.id === newsId);
+        alert(`Detalhes da notícia: ${news.title}\n\n${news.description}`);
+        // Você pode redirecionar para uma página de detalhes de notícia com mais conteúdo.
+    }
+
+    // Função para alternar o tema
+    function toggleTheme() {
+        const body = document.body;
+        if (theme === "light") {
+            body.style.backgroundColor = "#121212";
+            body.style.color = "#fff";
+            theme = "dark";
+        } else {
+            body.style.backgroundColor = "#fff";
+            body.style.color = "#000";
+            theme = "light";
+        }
+    }
+
+    // Função para filtrar por categoria
+    function filterCategory(category) {
+        currentCategory = category;
+        loadNews();
+    }
+
+    // Inicializar notícias ao carregar
+    window.onload = () => {
+        loadNews();
+    };
+</script>
+
+<!-- Interface de navegação e carregamento -->
+<button onclick="toggleTheme()">Alternar Tema</button>
+<select onchange="filterCategory(this.value)">
+    <option value="Todos">Todos</option>
+    <option value="Jogos">Jogos</option>
+    <option value="Recompensas">Recompensas</option>
+</select>
+<div id="news-feed"></div>
+<button id="load-more-btn" onclick="loadMoreNews()">Carregar Mais Notícias</button>
+<script>
+    let currentNewsPage = 0;
+    let allNews = [
+        { title: "Novo Mod para Minecraft", description: "Um novo mod de texturas foi lançado, confira!", id: 1, category: "Jogos", likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 }, subscribers: [], viewed: false },
+        { title: "Atualização de Shadow Fight 2", description: "Novos personagens e modos estão disponíveis.", id: 2, category: "Jogos", likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 }, subscribers: [], viewed: false },
+        { title: "Mini Jogos Chegando em Breve", description: "100 novos mini jogos serão lançados nas próximas semanas!", id: 3, category: "Jogos", likes: 0, comments: [], reactions: { like: 0, love: 0, sad: 0, laugh: 0 }, subscribers: [], viewed: false },
+        // Continue com mais notícias
+    ];
+
+    let currentCategory = "Todos";
+    let theme = "light"; // Default theme
+    let userPoints = 0; // Pontuação do usuário
+
+    // Função para carregar as notícias
+    function loadNews(page = 0) {
+        const newsFeed = document.getElementById("news-feed");
+        newsFeed.innerHTML = ""; // Limpar notícias carregadas
+
+        const newsPerPage = 5;
+        const start = page * newsPerPage;
+        const end = start + newsPerPage;
+        const filteredNews = allNews.filter(news => currentCategory === "Todos" || news.category === currentCategory).slice(start, end);
+
+        filteredNews.forEach(item => {
+            const newsItem = document.createElement("div");
+            newsItem.className = "news-item";
+            newsItem.id = `news-${item.id}`;
+            newsItem.innerHTML = `
+                <h3 onclick="openNewsDetail(${item.id})">${item.title}</h3>
+                <p>${item.description}</p>
+                <p><strong>Categoria:</strong> ${item.category}</p>
+                <div class="news-actions">
+                    <button onclick="likeNews(${item.id})">Curtir (${item.likes})</button>
+                    <button onclick="showComments(${item.id})">Comentários (${item.comments.length})</button>
+                    <button onclick="subscribeNews(${item.id})">Inscrever-se</button>
+                    <div>
+                        <button onclick="reactToNews(${item.id}, 'like')">👍 (${item.reactions.like})</button>
+                        <button onclick="reactToNews(${item.id}, 'love')">❤️ (${item.reactions.love})</button>
+                        <button onclick="reactToNews(${item.id}, 'sad')">😢 (${item.reactions.sad})</button>
+                        <button onclick="reactToNews(${item.id}, 'laugh')">😂 (${item.reactions.laugh})</button>
+                    </div>
+                </div>
+                <div id="comments-${item.id}" class="comments" style="display:none;">
+                    <input type="text" id="comment-input-${item.id}" placeholder="Escreva um comentário...">
+                    <button onclick="addComment(${item.id})">Comentar</button>
+                    <ul id="comment-list-${item.id}">
+                        ${item.comments.map(comment => `<li>${comment}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="news-footer">
+                    <span>Visualizado: ${item.viewed ? "Sim" : "Não"}</span>
+                </div>
+            `;
+            newsFeed.appendChild(newsItem);
+        });
+
+        // Esconder o botão "Carregar Mais" se não houver mais notícias
+        if (end >= allNews.length) {
+            document.getElementById("load-more-btn").style.display = "none";
+        }
+    }
+
+    // Função para curtir uma notícia
+    function likeNews(newsId) {
+        const news = allNews.find(news => news.id === newsId);
+        news.likes++;
+        userPoints += 5; // Ganha pontos por curtir
+        document.querySelector(`#news-${newsId} button`).innerText = `Curtir (${news.likes})`;
+        alert("Você ganhou 5 pontos por curtir esta notícia!");
+    }
+
+    // Função para reagir à notícia
+    function reactToNews(newsId, reactionType) {
+        const news = allNews.find(news => news.id === newsId);
+        if (news.reactions[reactionType] !== undefined) {
+            news.reactions[reactionType]++;
+            userPoints += 2; // Ganha pontos por reagir
+            document.querySelector(`#news-${newsId} button:nth-child(${Object.keys(news.reactions).indexOf(reactionType) + 1})`).innerText = `${reactionType} (${news.reactions[reactionType]})`;
+            alert("Você ganhou 2 pontos por reagir!");
+        }
+    }
+
+    // Função para exibir ou ocultar comentários
+    function showComments(newsId) {
+        const commentsSection = document.getElementById(`comments-${newsId}`);
+        commentsSection.style.display = commentsSection.style.display === "none" ? "block" : "none";
+    }
+
+    // Função para adicionar um comentário
+    function addComment(newsId) {
+        const commentInput = document.getElementById(`comment-input-${newsId}`);
+        const commentList = document.getElementById(`comment-list-${newsId}`);
+        const comment = commentInput.value.trim();
+
+        if (comment) {
+            const news = allNews.find(news => news.id === newsId);
+            news.comments.push(comment);
+            commentList.innerHTML += `<li>${comment}</li>`;
+            commentInput.value = ''; // Limpar o campo de comentário
+            userPoints += 1; // Ganha ponto por comentar
+            alert("Você ganhou 1 ponto por comentar!");
+        }
+    }
+
+    // Função para inscrever-se em uma notícia
+    function subscribeNews(newsId) {
+        const news = allNews.find(news => news.id === newsId);
+        const user = prompt("Digite seu nome para se inscrever:");
+        if (user) {
+            news.subscribers.push(user);
+            alert(`Você se inscreveu para receber notificações sobre a notícia: ${news.title}`);
+        }
+    }
+
+    // Função para carregar mais notícias
+    function loadMoreNews() {
+        currentNewsPage++;
+        loadNews(currentNewsPage);
+    }
+
+    // Função para abrir os detalhes da notícia
+    function openNewsDetail(newsId) {
+        const news = allNews.find(news => news.id === newsId);
+        news.viewed = true; // Marca como visualizado
+        alert(`Detalhes da notícia: ${news.title}\n\n${news.description}`);
+        loadNews(); // Atualiza a lista de notícias
+    }
+
+    // Função para alternar o tema
+    function toggleTheme() {
+        const body = document.body;
+        if (theme === "light") {
+            body.style.backgroundColor = "#121212";
+            body.style.color = "#fff";
+            theme = "dark";
+        } else {
+            body.style.backgroundColor = "#fff";
+            body.style.color = "#000";
+            theme = "light";
+        }
+    }
+
+    // Função para filtrar por categoria
+    function filterCategory(category) {
+        currentCategory = category;
+        loadNews();
+    }
+
+    // Função para buscar notícias
+    function searchNews(query) {
+        const newsFeed = document.getElementById("news-feed");
+        const results = allNews.filter(news => news.title.toLowerCase().includes(query.toLowerCase()));
+        newsFeed.innerHTML = ""; // Limpar resultados de pesquisa
+        results.forEach(item => {
+            const newsItem = document.createElement("div");
+            newsItem.className = "news-item";
+            newsItem.innerHTML = `
+                <h3 onclick="openNewsDetail(${item.id})">${item.title}</h3>
+                <p>${item.description}</p>
+            `;
+            newsFeed.appendChild(newsItem);
+        });
+    }
+
+    // Função para integrar com a API externa
+    async function fetchExternalNews() {
+        const apiKey = "YOUR_API_KEY";
+        const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        data.articles.forEach(article => {
+            allNews.push({
+                title: article.title,
+                description: article.description,
+                id: allNews.length + 1,
+                category: "Geral",
+                likes: 0,
+                comments: [],
+                reactions: { like: 0, love: 0, sad: 0, laugh: 0 },
+                subscribers: [],
+                viewed: false
+            });
+        });
+
+        loadNews(); // Recarregar notícias após a adição
+    }
+
+    // Inicializa a página ao carregar
+    window.onload = () => {
+        loadNews();
+        fetchExternalNews(); // Puxar notícias externas
+    };
+</script>

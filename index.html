@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RychardMods 2025 - Mods Grátis</title>
+    <title>RychardMods 2025 - Mini Games</title>
     <style>
         /* Reset de estilos */
         * {
@@ -17,7 +17,7 @@
             font-family: Arial, sans-serif;
             background: url('https://github.com/DJLightZN/rmodz/blob/main/DALL%C2%B7E%202025-02-12%2022.58.25%20-%20A%20futuristic%20cyberpunk-style%20neon%20green%20background%20with%20a%20high-tech%20circuit%20pattern,%20glowing%20digital%20elements,%20and%20a%20sleek,%20modern%20aesthetic.%20The%20desi.png?raw=true') no-repeat center center fixed;
             background-size: cover;
-            color: #00ffea;
+            color: #00ff00;
             text-align: center;
             padding: 20px;
             overflow-y: scroll;
@@ -25,13 +25,57 @@
 
         /* Cabeçalho */
         header {
-            background: rgba(0, 255, 255, 0.1);
+            background: rgba(0, 255, 0, 0.2);
             padding: 20px;
             font-size: 32px;
             font-weight: bold;
             border-radius: 10px;
-            color: #00ffff;
-            text-shadow: 0 0 10px #00ffff;
+            color: #00ff00;
+            text-shadow: 0 0 15px #00ff00;
+        }
+
+        /* Botão de menu */
+        .menu-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            background: rgba(0, 255, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            color: #00ff00;
+            border: none;
+        }
+
+        /* Menu lateral */
+        .menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 2px 0px 10px rgba(0, 255, 0, 0.5);
+            padding-top: 60px;
+            transition: 0.3s;
+        }
+
+        .menu a {
+            display: block;
+            padding: 15px;
+            color: #00ff00;
+            text-decoration: none;
+            font-size: 18px;
+            border-bottom: 1px solid #00ff00;
+        }
+
+        .menu a:hover {
+            background: rgba(0, 255, 0, 0.2);
+        }
+
+        .menu.active {
+            left: 0;
         }
 
         /* Container principal */
@@ -39,35 +83,35 @@
             max-width: 800px;
             margin: 30px auto;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
         }
 
-        /* Lista de mods */
-        .mod-list {
+        /* Lista de mini games */
+        .game-list {
             list-style: none;
             padding: 0;
         }
 
-        .mod-list li {
-            background: rgba(0, 255, 255, 0.1);
+        .game-list li {
+            background: rgba(0, 255, 0, 0.1);
             margin: 15px 0;
             padding: 15px;
             border-radius: 10px;
             transition: 0.3s;
-            border-left: 5px solid #00ffff;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            border-left: 5px solid #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
         }
 
-        .mod-list li:hover {
-            background: rgba(0, 255, 255, 0.3);
+        .game-list li:hover {
+            background: rgba(0, 255, 0, 0.3);
             transform: scale(1.05);
         }
 
-        .mod-list a {
+        .game-list a {
             text-decoration: none;
-            color: #00ffff;
+            color: #00ff00;
             font-weight: bold;
             font-size: 18px;
         }
@@ -78,31 +122,34 @@
             padding: 10px;
             font-size: 14px;
             opacity: 0.8;
-            color: #00ffff;
-        }
-
-        /* Partículas holográficas */
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
+            color: #00ff00;
         }
     </style>
 </head>
 <body>
+    <button class="menu-button" onclick="toggleMenu()">☰</button>
+    <div class="menu" id="menu">
+        <a href="#">Mini Games</a>
+        <a href="https://www.instagram.com/rd.zn2077/" target="_blank">Instagram do Criador</a>
+        <a href="#mods">Mods APK</a>
+    </div>
+
     <header>
-        RychardMods 2025 - Mods Grátis para Download
+        RychardMods 2025 - Mini Games
     </header>
 
     <div class="container">
-        <h2>Lista de Mods</h2>
-        <ul class="mod-list">
+        <h2>Lista de Mini Games</h2>
+        <ul class="game-list">
+            <li><a href="#">Jogo 1 - Em breve</a></li>
+            <li><a href="#">Jogo 2 - Em breve</a></li>
+        </ul>
+    </div>
+
+    <div class="container" id="mods">
+        <h2>Mods APK</h2>
+        <ul class="game-list">
             <li><a href="https://www.mediafire.com/file/escghy0z9f3ocsj/Shadow_Fight_2_UNLIMITED_MOD_APK_by_Melish+(1).zip/file" target="_blank">Shadow Fight 2 - Unlimited</a></li>
-            <li><a href="#">Em breve...</a></li>
         </ul>
     </div>
 
@@ -110,57 +157,15 @@
         &copy; 2025 RychardMods - Todos os direitos reservados.
     </footer>
 
-    <canvas id="particleCanvas"></canvas>
     <script>
-        const canvas = document.getElementById("particleCanvas");
-        const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particlesArray = [];
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 5 + 2;
-                this.speedX = Math.random() * 3 - 1.5;
-                this.speedY = Math.random() * 3 - 1.5;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = "rgba(0, 255, 255, 0.8)";
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = "#00ffff";
-                ctx.fill();
+        function toggleMenu() {
+            var menu = document.getElementById("menu");
+            if (menu.classList.contains("active")) {
+                menu.classList.remove("active");
+            } else {
+                menu.classList.add("active");
             }
         }
-
-        function init() {
-            particlesArray = [];
-            for (let i = 0; i < 100; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-            }
-            requestAnimationFrame(animate);
-        }
-
-        init();
-        animate();
     </script>
 </body>
 </html>

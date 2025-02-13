@@ -181,6 +181,238 @@
                 }
             }
         });
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RychardMods - Free Downloads & Mini Games</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: black;
+            color: #00ff00;
+            text-align: center;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        header {
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00ff00;
+            margin-bottom: 20px;
+        }
+        .menu {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            background: #00ff00;
+            color: black;
+            padding: 10px;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+        .menu:hover {
+            transform: rotate(180deg);
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 10px;
+            background: #000;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .dropdown a {
+            display: block;
+            color: #00ff00;
+            padding: 10px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .dropdown a:hover {
+            background: #003300;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #00ff00;
+        }
+        .search-box {
+            margin: 20px 0;
+        }
+        .search-box input {
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #00ff00;
+            background: black;
+            color: #00ff00;
+        }
+        .search-box button {
+            padding: 10px;
+            background: #00ff00;
+            border: none;
+            cursor: pointer;
+        }
+        .game-list, .mod-list {
+            list-style: none;
+            padding: 0;
+        }
+        .game-list li, .mod-list li {
+            background: rgba(0, 255, 0, 0.2);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        .game-list li:hover, .mod-list li:hover {
+            transform: scale(1.05);
+        }
+        .game-list a, .mod-list a {
+            color: #00ff00;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .chat-container {
+            margin-top: 20px;
+        }
+        .chat-box {
+            width: 100%;
+            height: 300px;
+            background: #000;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 10px;
+            overflow-y: auto;
+            border-radius: 5px;
+            transition: height 0.3s ease;
+        }
+        .chat-input {
+            width: 100%;
+            padding: 10px;
+            background: black;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            margin-top: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .chat-input:focus {
+            outline: none;
+            border-color: #00cc00;
+        }
+        .notification {
+            background: #003300;
+            color: #00ff00;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: none;
+        }
+        .theme-toggle {
+            background: #00ff00;
+            color: black;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>RychardMods - Free Downloads & Mini Games</header>
+    
+    <div class="menu" onclick="toggleMenu()">&#9776;</div>
+    <div class="dropdown" id="dropdown">
+        <a href="minigames.html">Mini Games</a>
+        <a href="mods.html">Mods APK</a>
+        <a href="https://www.instagram.com/rd.zn2077/" target="_blank">Instagram</a>
+        <a href="https://www.youtube.com/@RmodzYT" target="_blank">YouTube</a>
+        <a href="mailto:ytmodz@gmail.com">Support</a>
+    </div>
+    
+    <div class="search-box">
+        <input type="text" id="search" placeholder="Search mods or games...">
+        <button onclick="searchItems()">Search</button>
+    </div>
+
+    <div class="container">
+        <h2>Available Mods</h2>
+        <ul class="mod-list" id="mod-list">
+            <li><a href="https://www.mediafire.com/file/escghy0z9f3ocsj/Shadow_Fight_2_UNLIMITED_MOD_APK_by_Melish.zip/file" target="_blank">Shadow Fight 2 - Unlimited</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <h2>Mini Games Coming Soon</h2>
+        <ul class="game-list">
+            <li>Shadow Fight 2 - Unlimited</li>
+            <!-- Add 99 more games here -->
+        </ul>
+        <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    </div>
+
+    <div class="container chat-container">
+        <h2>Support Chat</h2>
+        <div class="chat-box" id="chat-box">
+            <p><strong>Support:</strong> How can we assist you?</p>
+        </div>
+        <textarea class="chat-input" id="chat-input" placeholder="Type your message..."></textarea>
+        <div class="notification" id="chat-notification">Message sent!</div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("dropdown");
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        }
+        
+        function searchItems() {
+            let input = document.getElementById("search").value.toLowerCase();
+            let items = document.querySelectorAll(".mod-list li");
+            items.forEach(item => {
+                item.style.display = item.innerText.toLowerCase().includes(input) ? "block" : "none";
+            });
+        }
+
+        document.getElementById('chat-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                var message = document.getElementById('chat-input').value;
+                if (message) {
+                    var chatBox = document.getElementById('chat-box');
+                    chatBox.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
+                    document.getElementById('chat-input').value = '';
+                    chatBox.scrollTop = chatBox.scrollHeight;
+
+                    // Show notification
+                    document.getElementById('chat-notification').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('chat-notification').style.display = 'none';
+                    }, 2000);
+                }
+            }
+        });
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+        }
+    </script>
+</body>
+</html>
+
     </script>
 </body>
 </html>

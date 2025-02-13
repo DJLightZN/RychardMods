@@ -124,6 +124,40 @@
             opacity: 0.8;
             color: #00ff00;
         }
+
+        /* Estilo dos botões de download */
+        .download-button {
+            display: inline-block;
+            background: #00ff00;
+            color: #000;
+            padding: 10px 20px;
+            margin: 10px 0;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .download-button:hover {
+            background: #00cc00;
+        }
+
+        /* Estilo para interações dos mods */
+        .mod-info {
+            font-size: 16px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 10px;
+            display: none;
+            transition: 0.3s;
+        }
+
+        .mod-info.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -132,6 +166,7 @@
         <a href="#">Mini Games</a>
         <a href="https://www.instagram.com/rd.zn2077/" target="_blank">Instagram do Criador</a>
         <a href="#mods">Mods APK</a>
+        <a href="https://www.youtube.com/@RmodzYT" target="_blank">Canal do YouTube</a>
     </div>
 
     <header>
@@ -147,9 +182,15 @@
     </div>
 
     <div class="container" id="mods">
-        <h2>Mods APK</h2>
+        <h2>Rychard Mods Downloads</h2>
         <ul class="game-list">
-            <li><a href="https://www.mediafire.com/file/escghy0z9f3ocsj/Shadow_Fight_2_UNLIMITED_MOD_APK_by_Melish+(1).zip/file" target="_blank">Shadow Fight 2 - Unlimited</a></li>
+            <li>
+                <a href="https://www.mediafire.com/file/escghy0z9f3ocsj/Shadow_Fight_2_UNLIMITED_MOD_APK_by_Melish+(1).zip/file" target="_blank">Shadow Fight 2 - Unlimited</a>
+                <button class="download-button" onclick="toggleModInfo('shadowFightInfo')">Informações</button>
+                <div id="shadowFightInfo" class="mod-info">
+                    <p>Mod para Shadow Fight 2, versão ilimitada. Aproveite recursos gratuitos e desbloqueados! <br>Download direto no Mediafire.</p>
+                </div>
+            </li>
         </ul>
     </div>
 
@@ -164,6 +205,15 @@
                 menu.classList.remove("active");
             } else {
                 menu.classList.add("active");
+            }
+        }
+
+        function toggleModInfo(modId) {
+            var modInfo = document.getElementById(modId);
+            if (modInfo.classList.contains("active")) {
+                modInfo.classList.remove("active");
+            } else {
+                modInfo.classList.add("active");
             }
         }
     </script>

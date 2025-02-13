@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RychardMods - Mods Grátis</title>
+    <title>RychardMods 2025 - Mods Grátis</title>
     <style>
         /* Reset de estilos */
         * {
@@ -15,21 +15,43 @@
         /* Corpo da página */
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #0f0f0f, #1e1e1e);
-            color: #d4d4d4;
+            background: url('https://github.com/DJLightZN/rmodz/blob/main/DALL%C2%B7E%202025-02-12%2022.58.25%20-%20A%20futuristic%20cyberpunk-style%20neon%20green%20background%20with%20a%20high-tech%20circuit%20pattern,%20glowing%20digital%20elements,%20and%20a%20sleek,%20modern%20aesthetic.%20The%20desi.png?raw=true') no-repeat center center fixed;
+            background-size: cover;
+            color: #00ff00;
             text-align: center;
             padding: 20px;
             overflow: hidden;
         }
 
-        /* Partículas */
-        canvas {
+        /* Efeito de partículas tipo raios */
+        .particles {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            pointer-events: none;
             z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 60px;
+            background: linear-gradient(180deg, #00ff00, transparent);
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateY(-100vh);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
         }
 
         /* Cabeçalho */
@@ -39,14 +61,7 @@
             font-size: 28px;
             font-weight: bold;
             border-radius: 10px;
-            color: #00ff00;
             text-shadow: 0 0 10px #00ff00;
-            animation: glow 1.5s infinite alternate;
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
-            to { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00; }
         }
 
         /* Container principal */
@@ -54,16 +69,9 @@
             max-width: 800px;
             margin: 30px auto;
             padding: 20px;
-            background: rgba(50, 50, 50, 0.3);
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
-            backdrop-filter: blur(10px);
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Lista de mods */
@@ -79,13 +87,12 @@
             border-radius: 10px;
             transition: 0.3s;
             border-left: 5px solid #00ff00;
-            animation: fadeIn 1s ease-in-out;
         }
 
         .mod-list li:hover {
             background: rgba(50, 50, 50, 1);
             transform: scale(1.05);
-            transition: 0.3s;
+            box-shadow: 0 0 10px #00ff00;
         }
 
         .mod-list a {
@@ -101,28 +108,13 @@
             padding: 10px;
             font-size: 14px;
             opacity: 0.8;
-            color: #00ff00;
-        }
-
-        /* Banner */
-        .banner {
-            width: 100%;
-            max-width: 800px;
-            display: block;
-            margin: 20px auto;
-            border-radius: 10px;
-            box-shadow: 0 0 20px #00ff00;
-            animation: fadeIn 1.5s ease-in-out;
         }
     </style>
 </head>
 <body>
-    <canvas id="particles"></canvas>
     <header>
-        RychardMods - Mods Grátis para Download
+        RychardMods 2025 - Mods Grátis para Download
     </header>
-
-    <img src="https://github.com/DJLightZN/rmodz/blob/main/A%20futuristic%20neon%20green%20banner.jpg?raw=true" alt="RychardMods Banner" class="banner">
 
     <div class="container">
         <h2>Lista de Mods</h2>
@@ -133,60 +125,22 @@
     </div>
 
     <footer>
-        &copy; 2024 RychardMods - Todos os direitos reservados.
+        &copy; 2025 RychardMods - Todos os direitos reservados.
     </footer>
 
+    <div class="particles"></div>
+
     <script>
-        // Partículas
-        const canvas = document.getElementById("particles");
-        const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particlesArray = [];
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 2 - 1;
-                this.speedY = Math.random() * 2 - 1;
+        document.addEventListener("DOMContentLoaded", function () {
+            const particleContainer = document.querySelector(".particles");
+            for (let i = 0; i < 50; i++) {
+                let particle = document.createElement("div");
+                particle.classList.add("particle");
+                particle.style.left = Math.random() * 100 + "vw";
+                particle.style.animationDuration = (Math.random() * 2 + 2) + "s";
+                particleContainer.appendChild(particle);
             }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-            }
-            draw() {
-                ctx.fillStyle = "#00ff00";
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = "#00ff00";
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.closePath();
-                ctx.fill();
-            }
-        }
-
-        function init() {
-            for (let i = 0; i < 100; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particlesArray.forEach(particle => {
-                particle.update();
-                particle.draw();
-            });
-            requestAnimationFrame(animate);
-        }
-
-        init();
-        animate();
+        });
     </script>
 </body>
 </html>

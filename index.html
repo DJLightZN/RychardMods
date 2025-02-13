@@ -11,28 +11,23 @@
             box-sizing: border-box;
         }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background: black;
             color: #00ff00;
             text-align: center;
             padding: 20px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        header {
-            font-size: 32px;
-            font-weight: bold;
-            text-shadow: 0 0 10px #00ff00;
-            margin-bottom: 20px;
+            overflow-x: hidden;
+            transition: background-color 0.5s, color 0.5s;
         }
         .menu {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 20px;
+            left: 20px;
             cursor: pointer;
-            font-size: 24px;
+            font-size: 30px;
             background: #00ff00;
             color: black;
-            padding: 10px;
+            padding: 15px;
             border-radius: 5px;
             transition: transform 0.3s ease;
         }
@@ -42,8 +37,8 @@
         .dropdown {
             display: none;
             position: absolute;
-            top: 50px;
-            left: 10px;
+            top: 60px;
+            left: 20px;
             background: #000;
             border: 1px solid #00ff00;
             border-radius: 5px;
@@ -52,36 +47,52 @@
         .dropdown a {
             display: block;
             color: #00ff00;
-            padding: 10px;
+            padding: 15px;
             text-decoration: none;
             transition: background-color 0.3s ease;
         }
         .dropdown a:hover {
             background: #003300;
         }
+        header {
+            font-size: 42px;
+            font-weight: bold;
+            text-shadow: 0 0 15px #00ff00, 0 0 20px #00ff00;
+            margin-bottom: 30px;
+            animation: fadeIn 3s ease-in-out;
+        }
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 20px auto;
-            background: rgba(0, 255, 0, 0.1);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px #00ff00;
+            background: rgba(0, 255, 0, 0.2);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px #00ff00;
+            margin-bottom: 40px;
+            position: relative;
         }
         .search-box {
-            margin: 20px 0;
+            margin: 30px 0;
         }
         .search-box input {
-            padding: 10px;
+            padding: 15px;
             width: 80%;
-            border: 1px solid #00ff00;
+            border: 2px solid #00ff00;
             background: black;
             color: #00ff00;
+            border-radius: 5px;
         }
         .search-box button {
-            padding: 10px;
+            padding: 15px;
             background: #00ff00;
             border: none;
+            color: black;
+            border-radius: 5px;
             cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .search-box button:hover {
+            transform: scale(1.1);
         }
         .game-list, .mod-list {
             list-style: none;
@@ -89,10 +100,10 @@
         }
         .game-list li, .mod-list li {
             background: rgba(0, 255, 0, 0.2);
-            margin: 10px 0;
-            padding: 15px;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 15px;
+            transition: transform 0.5s ease;
         }
         .game-list li:hover, .mod-list li:hover {
             transform: scale(1.05);
@@ -103,22 +114,26 @@
             text-decoration: none;
         }
         .chat-container {
-            margin-top: 20px;
+            margin-top: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px #00ff00;
         }
         .chat-box {
             width: 100%;
-            height: 300px;
+            height: 400px;
             background: #000;
             color: #00ff00;
             border: 1px solid #00ff00;
-            padding: 10px;
+            padding: 15px;
             overflow-y: auto;
-            border-radius: 5px;
-            transition: height 0.3s ease;
+            border-radius: 10px;
+            transition: all 0.3s ease;
         }
         .chat-input {
             width: 100%;
-            padding: 10px;
+            padding: 15px;
             background: black;
             color: #00ff00;
             border: 1px solid #00ff00;
@@ -138,19 +153,69 @@
             border-radius: 5px;
             display: none;
         }
+        .level-up {
+            font-size: 24px;
+            color: #00ff00;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00ff00;
+            margin-top: 20px;
+            opacity: 0;
+            animation: levelUpAnim 3s ease-in-out forwards;
+        }
         .theme-toggle {
             background: #00ff00;
             color: black;
-            padding: 10px;
+            padding: 15px;
             border-radius: 5px;
             cursor: pointer;
             margin-top: 20px;
+        }
+        .profile-container {
+            margin-top: 50px;
+            background: rgba(0, 255, 0, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px #00ff00;
+        }
+        .profile-info {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: particleAnim 3s infinite ease-in-out;
+        }
+        @keyframes particleAnim {
+            0% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+            50% {
+                opacity: 0;
+                transform: scale(0.5) translateY(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes levelUpAnim {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
     <header>RychardMods - Free Downloads & Mini Games</header>
-    
+
     <div class="menu" onclick="toggleMenu()">&#9776;</div>
     <div class="dropdown" id="dropdown">
         <a href="minigames.html">Mini Games</a>
@@ -159,7 +224,7 @@
         <a href="https://www.youtube.com/@RmodzYT" target="_blank">YouTube</a>
         <a href="mailto:ytmodz@gmail.com">Support</a>
     </div>
-    
+
     <div class="search-box">
         <input type="text" id="search" placeholder="Search mods or games...">
         <button onclick="searchItems()">Search</button>
@@ -170,6 +235,7 @@
         <ul class="mod-list" id="mod-list">
             <li><a href="https://www.mediafire.com/file/escghy0z9f3ocsj/Shadow_Fight_2_UNLIMITED_MOD_APK_by_Melish.zip/file" target="_blank">Shadow Fight 2 - Unlimited</a></li>
         </ul>
+        <div class="level-up">Level Up! You've unlocked new features!</div>
     </div>
 
     <div class="container">
@@ -190,12 +256,23 @@
         <div class="notification" id="chat-notification">Message sent!</div>
     </div>
 
+    <div class="profile-container">
+        <h3>Your Profile</h3>
+        <div class="profile-info">
+            <strong>Name:</strong> Rychard Pereira<br>
+            <strong>Email:</strong> richardp@domain.com<br>
+            <strong>Join Date:</strong> January 2025
+        </div>
+    </div>
+
     <script>
+        // Toggle menu
         function toggleMenu() {
             var menu = document.getElementById("dropdown");
             menu.style.display = (menu.style.display === "block") ? "none" : "block";
         }
         
+        // Search function
         function searchItems() {
             let input = document.getElementById("search").value.toLowerCase();
             let items = document.querySelectorAll(".mod-list li");
@@ -204,6 +281,7 @@
             });
         }
 
+        // Chat feature
         document.getElementById('chat-input').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
@@ -213,7 +291,6 @@
                     chatBox.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
                     document.getElementById('chat-input').value = '';
                     chatBox.scrollTop = chatBox.scrollHeight;
-
                     // Show notification
                     document.getElementById('chat-notification').style.display = 'block';
                     setTimeout(() => {
@@ -223,9 +300,24 @@
             }
         });
 
+        // Theme toggle
         function toggleTheme() {
             document.body.classList.toggle('light-theme');
         }
+
+        // Particle animations
+        function createParticles() {
+            for (let i = 0; i < 10; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                document.body.appendChild(particle);
+                let posX = Math.random() * window.innerWidth;
+                let posY = Math.random() * window.innerHeight;
+                particle.style.left = posX + 'px';
+                particle.style.top = posY + 'px';
+            }
+        }
+        createParticles();
     </script>
 </body>
 </html>

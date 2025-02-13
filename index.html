@@ -3,22 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RychardMods - Free Downloads & Mini Games</title>
+    <title>RychardMods - The Ultimate Modding Experience</title>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: 'Arial', sans-serif;
             background: black;
             color: #00ff00;
-            text-align: center;
-            padding: 20px;
+            font-family: 'Arial', sans-serif;
             overflow-x: hidden;
-            transition: background-color 0.5s, color 0.5s;
+            padding: 0;
+            transition: background-color 0.5s ease;
         }
+
         .menu {
             position: absolute;
             top: 20px;
@@ -31,29 +37,11 @@
             border-radius: 5px;
             transition: transform 0.3s ease;
         }
+
         .menu:hover {
             transform: rotate(180deg);
         }
-        .dropdown {
-            display: none;
-            position: absolute;
-            top: 60px;
-            left: 20px;
-            background: #000;
-            border: 1px solid #00ff00;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-        .dropdown a {
-            display: block;
-            color: #00ff00;
-            padding: 15px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .dropdown a:hover {
-            background: #003300;
-        }
+
         header {
             font-size: 42px;
             font-weight: bold;
@@ -61,6 +49,7 @@
             margin-bottom: 30px;
             animation: fadeIn 3s ease-in-out;
         }
+
         .container {
             max-width: 1200px;
             margin: 20px auto;
@@ -71,88 +60,80 @@
             margin-bottom: 40px;
             position: relative;
         }
-        .search-box {
-            margin: 30px 0;
-        }
-        .search-box input {
-            padding: 15px;
-            width: 80%;
-            border: 2px solid #00ff00;
-            background: black;
-            color: #00ff00;
-            border-radius: 5px;
-        }
-        .search-box button {
-            padding: 15px;
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
             background: #00ff00;
-            border: none;
-            color: black;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 50%;
+            animation: particleAnim 3s infinite ease-in-out;
+        }
+
+        @keyframes particleAnim {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0; transform: scale(0.5) translateY(-100px); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Advanced Styling */
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0, 255, 0, 0.5), rgba(0, 0, 0, 0.5));
+            animation: gradientAnimation 5s infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background: linear-gradient(90deg, rgba(0, 255, 0, 0.5), rgba(0, 0, 0, 0.5)); }
+            50% { background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 255, 0, 0.5)); }
+            100% { background: linear-gradient(90deg, rgba(0, 255, 0, 0.5), rgba(0, 0, 0, 0.5)); }
+        }
+
+        .chat-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #00ff00;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             transition: transform 0.3s ease;
         }
-        .search-box button:hover {
-            transform: scale(1.1);
-        }
-        .game-list, .mod-list {
-            list-style: none;
-            padding: 0;
-        }
-        .game-list li, .mod-list li {
-            background: rgba(0, 255, 0, 0.2);
-            margin: 15px 0;
-            padding: 20px;
-            border-radius: 15px;
-            transition: transform 0.5s ease;
-        }
-        .game-list li:hover, .mod-list li:hover {
-            transform: scale(1.05);
-        }
-        .game-list a, .mod-list a {
+
+        .chat-input {
+            width: 100%;
+            padding: 10px;
+            background: black;
             color: #00ff00;
-            font-weight: bold;
-            text-decoration: none;
+            border: 1px solid #00ff00;
+            margin-top: 10px;
+            border-radius: 5px;
         }
-        .chat-container {
-            margin-top: 30px;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px #00ff00;
-        }
+
         .chat-box {
             width: 100%;
-            height: 400px;
+            height: 300px;
             background: #000;
             color: #00ff00;
             border: 1px solid #00ff00;
             padding: 15px;
             overflow-y: auto;
             border-radius: 10px;
-            transition: all 0.3s ease;
         }
-        .chat-input {
-            width: 100%;
-            padding: 15px;
-            background: black;
-            color: #00ff00;
-            border: 1px solid #00ff00;
-            margin-top: 10px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-        .chat-input:focus {
-            outline: none;
-            border-color: #00cc00;
-        }
-        .notification {
-            background: #003300;
-            color: #00ff00;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            display: none;
-        }
+
         .level-up {
             font-size: 24px;
             color: #00ff00;
@@ -162,51 +143,7 @@
             opacity: 0;
             animation: levelUpAnim 3s ease-in-out forwards;
         }
-        .theme-toggle {
-            background: #00ff00;
-            color: black;
-            padding: 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .profile-container {
-            margin-top: 50px;
-            background: rgba(0, 255, 0, 0.2);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px #00ff00;
-        }
-        .profile-info {
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
-        .particle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #00ff00;
-            border-radius: 50%;
-            animation: particleAnim 3s infinite ease-in-out;
-        }
-        @keyframes particleAnim {
-            0% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-            50% {
-                opacity: 0;
-                transform: scale(0.5) translateY(-50px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
+
         @keyframes levelUpAnim {
             0% { opacity: 0; }
             100% { opacity: 1; }
@@ -214,98 +151,35 @@
     </style>
 </head>
 <body>
-    <header>RychardMods - Free Downloads & Mini Games</header>
+    <div class="background-animation"></div>
+
+    <header>RychardMods - Ultimate Modding Experience</header>
 
     <div class="menu" onclick="toggleMenu()">&#9776;</div>
-    <div class="dropdown" id="dropdown">
-        <a href="minigames.html">Mini Games</a>
-        <a href="mods.html">Mods APK</a>
-        <a href="https://www.instagram.com/rd.zn2077/" target="_blank">Instagram</a>
-        <a href="https://www.youtube.com/@RmodzYT" target="_blank">YouTube</a>
-        <a href="mailto:ytmodz@gmail.com">Support</a>
-    </div>
 
-    <div class="search-box">
-        <input type="text" id="search" placeholder="Search mods or games...">
-        <button onclick="searchItems()">Search</button>
+    <div class="container">
+        <h2>Explore Mods & Games</h2>
+        <div id="mod-list"></div>
     </div>
 
     <div class="container">
-        <h2>Available Mods</h2>
-        <ul class="mod-list" id="mod-list">
-            <li><a href="https://www.mediafire.com/file/escghy0z9f3ocsj/Shadow_Fight_2_UNLIMITED_MOD_APK_by_Melish.zip/file" target="_blank">Shadow Fight 2 - Unlimited</a></li>
-        </ul>
-        <div class="level-up">Level Up! You've unlocked new features!</div>
+        <h2>Your Progress</h2>
+        <div id="progress-container">
+            <div id="level-bar"></div>
+            <div id="badge-container"></div>
+        </div>
     </div>
 
-    <div class="container">
-        <h2>Mini Games Coming Soon</h2>
-        <ul class="game-list">
-            <li>Shadow Fight 2 - Unlimited</li>
-            <!-- Add 99 more games here -->
-        </ul>
-        <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
-    </div>
-
-    <div class="container chat-container">
-        <h2>Support Chat</h2>
+    <div class="chat-container">
+        <h3>Live Support Chat</h3>
         <div class="chat-box" id="chat-box">
-            <p><strong>Support:</strong> How can we assist you?</p>
+            <p><strong>Support:</strong> How can we help you?</p>
         </div>
         <textarea class="chat-input" id="chat-input" placeholder="Type your message..."></textarea>
-        <div class="notification" id="chat-notification">Message sent!</div>
-    </div>
-
-    <div class="profile-container">
-        <h3>Your Profile</h3>
-        <div class="profile-info">
-            <strong>Name:</strong> Rychard Pereira<br>
-            <strong>Email:</strong> richardp@domain.com<br>
-            <strong>Join Date:</strong> January 2025
-        </div>
     </div>
 
     <script>
-        // Toggle menu
-        function toggleMenu() {
-            var menu = document.getElementById("dropdown");
-            menu.style.display = (menu.style.display === "block") ? "none" : "block";
-        }
-        
-        // Search function
-        function searchItems() {
-            let input = document.getElementById("search").value.toLowerCase();
-            let items = document.querySelectorAll(".mod-list li");
-            items.forEach(item => {
-                item.style.display = item.innerText.toLowerCase().includes(input) ? "block" : "none";
-            });
-        }
-
-        // Chat feature
-        document.getElementById('chat-input').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                var message = document.getElementById('chat-input').value;
-                if (message) {
-                    var chatBox = document.getElementById('chat-box');
-                    chatBox.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
-                    document.getElementById('chat-input').value = '';
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                    // Show notification
-                    document.getElementById('chat-notification').style.display = 'block';
-                    setTimeout(() => {
-                        document.getElementById('chat-notification').style.display = 'none';
-                    }, 2000);
-                }
-            }
-        });
-
-        // Theme toggle
-        function toggleTheme() {
-            document.body.classList.toggle('light-theme');
-        }
-
-        // Particle animations
+        // Dynamic particle effects
         function createParticles() {
             for (let i = 0; i < 10; i++) {
                 let particle = document.createElement('div');
@@ -317,7 +191,62 @@
                 particle.style.top = posY + 'px';
             }
         }
+
         createParticles();
+
+        // Simulate dynamic game and mod loading
+        function loadMods() {
+            let modList = document.getElementById('mod-list');
+            let mods = ['Mod 1 - Game A', 'Mod 2 - Game B', 'Mod 3 - Game C'];
+
+            mods.forEach(mod => {
+                let modItem = document.createElement('div');
+                modItem.textContent = mod;
+                modList.appendChild(modItem);
+            });
+        }
+
+        loadMods();
+
+        // Simulate user level progress
+        function updateProgress() {
+            let levelBar = document.getElementById('level-bar');
+            levelBar.style.width = '80%'; // 80% progress for demo
+            levelBar.style.background = '#00ff00';
+
+            let badgeContainer = document.getElementById('badge-container');
+            let badge = document.createElement('div');
+            badge.classList.add('badge');
+            badge.textContent = 'Level 5 Badge';
+            badgeContainer.appendChild(badge);
+
+            let levelUp = document.createElement('div');
+            levelUp.classList.add('level-up');
+            levelUp.textContent = 'Congratulations, you leveled up!';
+            document.body.appendChild(levelUp);
+        }
+
+        updateProgress();
+
+        // Chat functionality
+        const chatBox = document.getElementById('chat-box');
+        const chatInput = document.getElementById('chat-input');
+
+        chatInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                let userMessage = chatInput.value;
+                let chatMessage = document.createElement('p');
+                chatMessage.innerHTML = `<strong>You:</strong> ${userMessage}`;
+                chatBox.appendChild(chatMessage);
+                chatInput.value = '';
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        });
+
+        // Toggle menu
+        function toggleMenu() {
+            alert('Menu toggled!');
+        }
     </script>
 </body>
 </html>

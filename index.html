@@ -1,334 +1,171 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulação de IA</title>
+    <title>RychardMods 2025 - Mini Games</title>
     <style>
+        /* Reset de estilos */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Corpo da página */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
+            background: url('https://github.com/DJLightZN/rmodz/blob/main/DALL%C2%B7E%202025-02-12%2022.58.25%20-%20A%20futuristic%20cyberpunk-style%20neon%20green%20background%20with%20a%20high-tech%20circuit%20pattern,%20glowing%20digital%20elements,%20and%20a%20sleek,%20modern%20aesthetic.%20The%20desi.png?raw=true') no-repeat center center fixed;
+            background-size: cover;
+            color: #00ff00;
+            text-align: center;
+            padding: 20px;
+            overflow-y: scroll;
+        }
+
+        /* Cabeçalho */
+        header {
+            background: rgba(0, 255, 0, 0.2);
+            padding: 20px;
+            font-size: 32px;
+            font-weight: bold;
+            border-radius: 10px;
+            color: #00ff00;
+            text-shadow: 0 0 15px #00ff00;
+        }
+
+        /* Botão de menu */
+        .menu-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            background: rgba(0, 255, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            color: #00ff00;
+            border: none;
+        }
+
+        /* Menu lateral */
+        .menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 2px 0px 10px rgba(0, 255, 0, 0.5);
+            padding-top: 60px;
+            transition: 0.3s;
+        }
+
+        .menu a {
+            display: block;
+            padding: 15px;
+            color: #00ff00;
+            text-decoration: none;
+            font-size: 18px;
+            border-bottom: 1px solid #00ff00;
+        }
+
+        .menu a:hover {
+            background: rgba(0, 255, 0, 0.2);
+        }
+
+        .menu.active {
+            left: 0;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        /* Lista de mini games */
+        .game-list {
+            list-style: none;
             padding: 0;
         }
 
-        .container {
-            width: 100%;
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        .game-list li {
+            background: rgba(0, 255, 0, 0.1);
+            margin: 15px 0;
+            padding: 15px;
             border-radius: 10px;
+            transition: 0.3s;
+            border-left: 5px solid #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
         }
 
-        h1 {
-            text-align: center;
-            color: #333;
+        .game-list li:hover {
+            background: rgba(0, 255, 0, 0.3);
+            transform: scale(1.05);
         }
 
-        #chat-box {
-            max-height: 300px;
-            overflow-y: auto;
-            margin-bottom: 20px;
+        .game-list a {
+            text-decoration: none;
+            color: #00ff00;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Rodapé */
+        footer {
+            margin-top: 20px;
             padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        #chat-box p {
-            padding: 5px;
-            margin: 5px 0;
-            border-radius: 5px;
-        }
-
-        .user-message {
-            text-align: right;
-            background-color: #d1ffd1;
-        }
-
-        .ai-message {
-            text-align: left;
-            background-color: #e2e2ff;
-        }
-
-        input[type="text"] {
-            width: 80%;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            width: 15%;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: none;
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        button:hover {
-            background-color: #45a049;
+            font-size: 14px;
+            opacity: 0.8;
+            color: #00ff00;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Simulação de IA</h1>
-        <div id="chat-box"></div>
-        <input type="text" id="user-input" placeholder="Digite sua mensagem...">
-        <button onclick="sendMessage()">Enviar</button>
+    <button class="menu-button" onclick="toggleMenu()">☰</button>
+    <div class="menu" id="menu">
+        <a href="#">Mini Games</a>
+        <a href="https://www.instagram.com/rd.zn2077/" target="_blank">Instagram do Criador</a>
+        <a href="#mods">Mods APK</a>
     </div>
+
+    <header>
+        RychardMods 2025 - Mini Games
+    </header>
+
+    <div class="container">
+        <h2>Lista de Mini Games</h2>
+        <ul class="game-list">
+            <li><a href="#">Jogo 1 - Em breve</a></li>
+            <li><a href="#">Jogo 2 - Em breve</a></li>
+        </ul>
+    </div>
+
+    <div class="container" id="mods">
+        <h2>Mods APK</h2>
+        <ul class="game-list">
+            <li><a href="https://www.mediafire.com/file/escghy0z9f3ocsj/Shadow_Fight_2_UNLIMITED_MOD_APK_by_Melish+(1).zip/file" target="_blank">Shadow Fight 2 - Unlimited</a></li>
+        </ul>
+    </div>
+
+    <footer>
+        &copy; 2025 RychardMods - Todos os direitos reservados.
+    </footer>
 
     <script>
-        // Função para simular a IA
-        function aiResponse(userMessage) {
-            const userMsg = userMessage.toLowerCase();
-
-            // Respostas da IA baseadas nas palavras-chave
-            if (userMsg.includes('olá') || userMsg.includes('oi')) {
-                return "Olá, como posso ajudar você hoje?";
-            } else if (userMsg.includes('como você está')) {
-                return "Eu sou apenas um programa, mas estou funcionando bem, obrigado por perguntar!";
-            } else if (userMsg.includes('qual é o seu nome')) {
-                return "Eu sou uma IA sem nome, mas você pode me chamar de 'Assistente'.";
-            } else if (userMsg.includes('adeus') || userMsg.includes('tchau')) {
-                return "Tchau! Espero ter ajudado!";
-            } else if (userMsg.includes('obrigado')) {
-                return "Você é bem-vindo!";
+        function toggleMenu() {
+            var menu = document.getElementById("menu");
+            if (menu.classList.contains("active")) {
+                menu.classList.remove("active");
             } else {
-                return "Desculpe, não entendi. Pode reformular?";
+                menu.classList.add("active");
             }
         }
-
-        // Função para enviar a mensagem
-        function sendMessage() {
-            const userInput = document.getElementById('user-input').value;
-            const chatBox = document.getElementById('chat-box');
-
-            if (userInput.trim() === "") return;
-
-            // Exibir a mensagem do usuário
-            const userMessage = document.createElement('p');
-            userMessage.className = 'user-message';
-            userMessage.textContent = `Você: ${userInput}`;
-            chatBox.appendChild(userMessage);
-
-            // Limpar o campo de input
-            document.getElementById('user-input').value = "";
-
-            // Simular a resposta da IA
-            const aiMessage = document.createElement('p');
-            aiMessage.className = 'ai-message';
-            aiMessage.textContent = `IA: ${aiResponse(userInput)}`;
-            chatBox.appendChild(aiMessage);
-
-            // Rolar para o fundo
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        // Ação ao pressionar "Enter" para enviar
-        document.getElementById('user-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-            <!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot IA - Versão Expandida</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .chat-container {
-            width: 400px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-        }
-
-        .chat-box {
-            height: 400px;
-            overflow-y: auto;
-            padding: 15px;
-            background-color: #f1f1f1;
-            font-size: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .chat-box .user-msg,
-        .chat-box .ai-msg {
-            margin-bottom: 15px;
-        }
-
-        .chat-box .user-msg {
-            text-align: right;
-            color: #333;
-            background-color: #e0f7fa;
-            padding: 10px;
-            border-radius: 10px;
-            max-width: 80%;
-            align-self: flex-end;
-        }
-
-        .chat-box .ai-msg {
-            text-align: left;
-            color: #007bff;
-            background-color: #f1f8ff;
-            padding: 10px;
-            border-radius: 10px;
-            max-width: 80%;
-            align-self: flex-start;
-        }
-
-        .input-container {
-            display: flex;
-            padding: 10px;
-            background-color: #fff;
-            border-top: 1px solid #ddd;
-        }
-
-        .input-container input {
-            flex: 1;
-            padding: 10px;
-            font-size: 16px;
-            border: none;
-            border-radius: 4px;
-            margin-right: 10px;
-            outline: none;
-            background-color: #f9f9f9;
-        }
-
-        .input-container button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .input-container button:hover {
-            background-color: #0056b3;
-        }
-
-        .input-container input:focus {
-            background-color: #e6f0ff;
-        }
-
-        .input-container button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        .loading {
-            color: #007bff;
-            font-style: italic;
-        }
-    </style>
-</head>
-<body>
-
-<div class="chat-container">
-    <div class="chat-box" id="chat-box"></div>
-    <div class="input-container">
-        <input type="text" id="user-input" placeholder="Digite sua mensagem..." onkeydown="if(event.key === 'Enter'){sendMessage()}">
-        <button onclick="sendMessage()" id="send-btn">Enviar</button>
-    </div>
-</div>
-
-<script>
-    const chatBox = document.getElementById('chat-box');
-    const userInput = document.getElementById('user-input');
-    const sendBtn = document.getElementById('send-btn');
-
-    // Função para exibir a mensagem na tela
-    function displayMessage(message, sender = 'ai') {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add(sender === 'user' ? 'user-msg' : 'ai-msg');
-        messageDiv.textContent = message;
-        chatBox.appendChild(messageDiv);
-        chatBox.scrollTop = chatBox.scrollHeight; // Rolagem para o final
-    }
-
-    // Resposta da IA baseada na mensagem do usuário
-    function getAIResponse(userMessage) {
-        let response = '';
-        const lowerCaseMessage = userMessage.toLowerCase();
-
-        if (lowerCaseMessage.includes('olá') || lowerCaseMessage.includes('oi')) {
-            response = 'Olá! Como posso te ajudar hoje?';
-        } else if (lowerCaseMessage.includes('como você está')) {
-            response = 'Eu estou bem, obrigado! E você?';
-        } else if (lowerCaseMessage.includes('qual seu nome')) {
-            response = 'Eu sou um assistente virtual! Qual seu nome?';
-        } else if (lowerCaseMessage.includes('adeus') || lowerCaseMessage.includes('tchau')) {
-            response = 'Até logo! Volte quando precisar de ajuda.';
-        } else {
-            response = 'Desculpe, não entendi. Pode reformular?';
-        }
-
-        return response;
-    }
-
-    // Função para processar a mensagem do usuário e IA
-    function sendMessage() {
-        const userMessage = userInput.value.trim();
-        if (userMessage === '') return;
-
-        // Exibe a mensagem do usuário
-        displayMessage(userMessage, 'user');
-        userInput.value = '';
-        userInput.disabled = true;
-        sendBtn.disabled = true;
-
-        // Exibe mensagem de carregamento para IA
-        displayMessage('Aguarde...', 'ai');
-
-        // Simula a resposta da IA com atraso
-        setTimeout(() => {
-            const aiMessage = getAIResponse(userMessage);
-            chatBox.lastChild.textContent = ''; // Remove a mensagem "Aguarde..."
-            displayMessage(aiMessage, 'ai');
-            userInput.disabled = false;
-            sendBtn.disabled = false;
-            userInput.focus();
-        }, 1500); // Atraso de 1.5 segundos para simular processamento
-    }
-
-    // Função para limpar a conversa
-    function clearChat() {
-        chatBox.innerHTML = '';
-    }
-
-    // Função de inicialização
-    window.onload = function() {
-        displayMessage('Olá! Eu sou um assistente virtual. Como posso te ajudar?', 'ai');
-    };
-</script>
-
-</body>
-</html>
-
-        });
     </script>
 </body>
 </html>

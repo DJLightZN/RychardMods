@@ -1,171 +1,186 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RychardMods 2025 - Mini Games</title>
+    <title>RychardMods - Free Downloads & Mini Games</title>
     <style>
-        /* Reset de estilos */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        /* Corpo da página */
         body {
             font-family: Arial, sans-serif;
-            background: url('https://github.com/DJLightZN/rmodz/blob/main/DALL%C2%B7E%202025-02-12%2022.58.25%20-%20A%20futuristic%20cyberpunk-style%20neon%20green%20background%20with%20a%20high-tech%20circuit%20pattern,%20glowing%20digital%20elements,%20and%20a%20sleek,%20modern%20aesthetic.%20The%20desi.png?raw=true') no-repeat center center fixed;
-            background-size: cover;
+            background: black;
             color: #00ff00;
             text-align: center;
             padding: 20px;
-            overflow-y: scroll;
         }
-
-        /* Cabeçalho */
         header {
-            background: rgba(0, 255, 0, 0.2);
-            padding: 20px;
             font-size: 32px;
             font-weight: bold;
-            border-radius: 10px;
-            color: #00ff00;
-            text-shadow: 0 0 15px #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+            margin-bottom: 20px;
         }
-
-        /* Botão de menu */
-        .menu-button {
+        .menu {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 24px;
+            top: 10px;
+            left: 10px;
             cursor: pointer;
-            background: rgba(0, 255, 0, 0.2);
+            font-size: 24px;
+            background: #00ff00;
+            color: black;
             padding: 10px;
             border-radius: 5px;
-            color: #00ff00;
-            border: none;
         }
-
-        /* Menu lateral */
-        .menu {
-            position: fixed;
-            top: 0;
-            left: -250px;
-            width: 250px;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            box-shadow: 2px 0px 10px rgba(0, 255, 0, 0.5);
-            padding-top: 60px;
-            transition: 0.3s;
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 10px;
+            background: #000;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
         }
-
-        .menu a {
+        .dropdown a {
             display: block;
-            padding: 15px;
             color: #00ff00;
+            padding: 10px;
             text-decoration: none;
-            font-size: 18px;
-            border-bottom: 1px solid #00ff00;
         }
-
-        .menu a:hover {
-            background: rgba(0, 255, 0, 0.2);
+        .dropdown a:hover {
+            background: #003300;
         }
-
-        .menu.active {
-            left: 0;
-        }
-
-        /* Container principal */
         .container {
             max-width: 800px;
-            margin: 30px auto;
+            margin: 20px auto;
+            background: rgba(0, 255, 0, 0.1);
             padding: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            border-radius: 10px;
+            box-shadow: 0 0 10px #00ff00;
         }
-
-        /* Lista de mini games */
-        .game-list {
+        .search-box {
+            margin: 20px 0;
+        }
+        .search-box input {
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #00ff00;
+            background: black;
+            color: #00ff00;
+        }
+        .search-box button {
+            padding: 10px;
+            background: #00ff00;
+            border: none;
+            cursor: pointer;
+        }
+        .game-list, .mod-list {
             list-style: none;
             padding: 0;
         }
-
-        .game-list li {
-            background: rgba(0, 255, 0, 0.1);
-            margin: 15px 0;
+        .game-list li, .mod-list li {
+            background: rgba(0, 255, 0, 0.2);
+            margin: 10px 0;
             padding: 15px;
             border-radius: 10px;
-            transition: 0.3s;
-            border-left: 5px solid #00ff00;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
         }
-
-        .game-list li:hover {
-            background: rgba(0, 255, 0, 0.3);
-            transform: scale(1.05);
-        }
-
-        .game-list a {
-            text-decoration: none;
+        .game-list a, .mod-list a {
             color: #00ff00;
             font-weight: bold;
-            font-size: 18px;
+            text-decoration: none;
         }
-
-        /* Rodapé */
-        footer {
+        .chat-container {
             margin-top: 20px;
-            padding: 10px;
-            font-size: 14px;
-            opacity: 0.8;
+        }
+        .chat-box {
+            width: 100%;
+            height: 300px;
+            background: #000;
             color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 10px;
+            overflow-y: auto;
+            border-radius: 5px;
+        }
+        .chat-input {
+            width: 100%;
+            padding: 10px;
+            background: black;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            margin-top: 10px;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <button class="menu-button" onclick="toggleMenu()">☰</button>
-    <div class="menu" id="menu">
-        <a href="#">Mini Games</a>
-        <a href="https://www.instagram.com/rd.zn2077/" target="_blank">Instagram do Criador</a>
-        <a href="#mods">Mods APK</a>
+    <header>RychardMods - Free Downloads & Mini Games</header>
+    
+    <div class="menu" onclick="toggleMenu()">&#9776;</div>
+    <div class="dropdown" id="dropdown">
+        <a href="minigames.html">Mini Games</a>
+        <a href="mods.html">Mods APK</a>
+        <a href="https://www.instagram.com/rd.zn2077/" target="_blank">Instagram</a>
+        <a href="https://www.youtube.com/@RmodzYT" target="_blank">YouTube</a>
+        <a href="mailto:ytmodz@gmail.com">Support</a>
     </div>
-
-    <header>
-        RychardMods 2025 - Mini Games
-    </header>
+    
+    <div class="search-box">
+        <input type="text" id="search" placeholder="Search mods or games...">
+        <button onclick="searchItems()">Search</button>
+    </div>
 
     <div class="container">
-        <h2>Lista de Mini Games</h2>
-        <ul class="game-list">
-            <li><a href="#">Jogo 1 - Em breve</a></li>
-            <li><a href="#">Jogo 2 - Em breve</a></li>
+        <h2>Available Mods</h2>
+        <ul class="mod-list" id="mod-list">
+            <li><a href="https://www.mediafire.com/file/escghy0z9f3ocsj/Shadow_Fight_2_UNLIMITED_MOD_APK_by_Melish.zip/file" target="_blank">Shadow Fight 2 - Unlimited</a></li>
         </ul>
     </div>
 
-    <div class="container" id="mods">
-        <h2>Mods APK</h2>
+    <div class="container">
+        <h2>Mini Games Coming Soon</h2>
         <ul class="game-list">
-            <li><a href="https://www.mediafire.com/file/escghy0z9f3ocsj/Shadow_Fight_2_UNLIMITED_MOD_APK_by_Melish+(1).zip/file" target="_blank">Shadow Fight 2 - Unlimited</a></li>
+            <li>Shadow Fight 2 - Unlimited</li>
+            <!-- Add 99 more games here -->
         </ul>
     </div>
 
-    <footer>
-        &copy; 2025 RychardMods - Todos os direitos reservados.
-    </footer>
+    <div class="container chat-container">
+        <h2>Support Chat</h2>
+        <div class="chat-box" id="chat-box">
+            <p><strong>Support:</strong> How can we assist you?</p>
+        </div>
+        <textarea class="chat-input" id="chat-input" placeholder="Type your message..."></textarea>
+    </div>
 
     <script>
         function toggleMenu() {
-            var menu = document.getElementById("menu");
-            if (menu.classList.contains("active")) {
-                menu.classList.remove("active");
-            } else {
-                menu.classList.add("active");
-            }
+            var menu = document.getElementById("dropdown");
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
         }
+        
+        function searchItems() {
+            let input = document.getElementById("search").value.toLowerCase();
+            let items = document.querySelectorAll(".mod-list li");
+            items.forEach(item => {
+                item.style.display = item.innerText.toLowerCase().includes(input) ? "block" : "none";
+            });
+        }
+
+        document.getElementById('chat-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                var message = document.getElementById('chat-input').value;
+                if (message) {
+                    var chatBox = document.getElementById('chat-box');
+                    chatBox.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
+                    document.getElementById('chat-input').value = '';
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }
+            }
+        });
     </script>
 </body>
 </html>
